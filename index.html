@@ -30,8 +30,8 @@
         const volumeSlider = document.getElementById('volume-slider');
 
         document.addEventListener('DOMContentLoaded', () => {
-            audio.currentTime = 0; // Restart the audio on page load
-            audio.volume = volumeSlider.value; // Set initial volume to slider value
+            audio.currentTime = 0;
+            audio.volume = volumeSlider.value;
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.catch(() => {
