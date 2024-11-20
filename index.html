@@ -9,6 +9,7 @@
     <link rel="icon" href="image.ico" type="image/x-icon">
 </head>
 <body>
+    <audio id="background-audio" src="14 Split.mp3" autoplay loop></audio>
     <div class="container">
         <div class="profile-img"></div>
         <h1>crispy</h1>
@@ -18,5 +19,47 @@
             <li><a href="https://www.instagram.com/crispyy.vfx/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
         </ul>
     </div>
+    <div class="audio-controls">
+        <button id="mute-button"><i class="fas fa-volume-mute"></i></button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <script>
+        const audio = document.getElementById('background-audio');
+        const muteButton = document.getElementById('mute-button');
+        const volumeSlider = document.getElementById('volume-slider');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            audio.currentTime = 0; // Restart the audio on page load
+            audio.volume = volumeSlider.value; // Set initial volume to slider value
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    console.log("Autoplay blocked. User interaction required.");
+                });
+            }
+        });
+
+        muteButton.addEventListener('click', () => {
+            if (audio.muted) {
+                audio.muted = false;
+                muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } else {
+                audio.muted = true;
+                muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audio.volume = e.target.value;
+            if (audio.volume === 0) {
+                audio.muted = true;
+                muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                audio.muted = false;
+                muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+    </script>
 </body>
 </html>
